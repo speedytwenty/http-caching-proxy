@@ -4,7 +4,7 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {expect} from '@loopback/testlab';
-import {HttpCachingProxy} from '../../src/http-caching-proxy';
+import {HttpCachingProxy} from '../../http-caching-proxy';
 
 describe('HttpCachingProxy', () => {
   describe('constructor', () => {

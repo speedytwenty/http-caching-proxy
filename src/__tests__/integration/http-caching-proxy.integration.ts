@@ -12,7 +12,7 @@ import * as path from 'path';
 import * as makeRequest from 'request-promise-native';
 import * as rimrafCb from 'rimraf';
 import * as util from 'util';
-import {HttpCachingProxy, ProxyOptions} from '../../src/http-caching-proxy';
+import {HttpCachingProxy, ProxyOptions} from '../../http-caching-proxy';
 
 const CACHE_DIR = path.join(__dirname, '.cache');
 
