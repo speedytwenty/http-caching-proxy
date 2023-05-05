@@ -159,7 +159,9 @@ export class HttpCachingProxy {
 
     try {
       const entry = await cacache.get(this._options.cachePath, cacheKey);
-      if (entry.metadata.createdAt + this._options.ttl > Date.now()) {
+      const ttl = this._options.ttl;
+      // Support infinite cache lifetime
+      if (ttl === 0 || entry.metadata.createdAt + ttl > Date.now()) {
         debug('Sending cached response for %s', cacheKey);
         this._sendCachedEntry(entry.data, entry.metadata, response);
         return;
@@ -219,6 +221,10 @@ export class HttpCachingProxy {
       backendResponse.data,
     );
 
+    // Hack to resolve mysterious HPE_INVALID_CONSTANT issue
+    if (backendResponse.headers['content-length']) {
+      backendResponse.headers['content-length'] = backendResponse.data.length;
+    }
     const metadata: CachedMetadata = {
       statusCode: backendResponse.status,
       headers: backendResponse.headers,
